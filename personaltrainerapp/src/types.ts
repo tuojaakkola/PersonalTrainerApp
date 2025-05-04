@@ -1,4 +1,4 @@
-export type CustomerData = {
+export type Customer = {
     firstname: string;
     lastname: string;
     streetaddress: string;
@@ -6,12 +6,34 @@ export type CustomerData = {
     city: string;
     email: string;
     phone: string;
+    _links: {
+      self: {
+        href: string;
+      };
+      customer: {
+        href: string;
+      };
+      trainings: {
+        href: string;
+      };
+    };
   };
 
-  export type TrainingData = {
+  export type Training = {
     id: number;
     activity: string;
     date: Date;
     duration: number;
     customername: string; 
+    _links: {
+      self: {
+        href: string;
+      };
+      training: {
+        href: string;
+      };
+      customer: {
+        href: string;
+      };
+    };
   };

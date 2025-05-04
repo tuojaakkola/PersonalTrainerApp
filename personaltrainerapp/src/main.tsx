@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import Customers from './components/Customers';
 import Trainings from './components/Trainings';
-import Home from './components/Home';
 import React from 'react';
 import Calendar from './components/Calendar';
 
@@ -13,7 +12,7 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        element: <Home />,
+        element: <Customers />,
         index: true,
       },
       {

@@ -1,22 +1,43 @@
 import { Link, Outlet } from "react-router-dom";
 import { AppBar, Toolbar, Button, Box } from "@mui/material";
+import './App.css';
 
 function App() {
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="static" style={{ backgroundColor: "#333" }}>
         <Toolbar>
-          <Box>
-            <Button color="inherit" component={Link} to="/">
-              Home
-            </Button>
-            <Button color="inherit" component={Link} to="/customers">
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "16px", // Space between buttons
+              width: "100%", // Center the buttons horizontally
+            }}
+          >
+            <Button
+              component={Link}
+              to="/customers"
+              variant="outlined"
+              style={{ color: "white", borderColor: "white" }}
+            >
               Customers
             </Button>
-            <Button color="inherit" component={Link} to="/trainings">
+            <Button
+              component={Link}
+              to="/trainings"
+              variant="outlined"
+              style={{ color: "white", borderColor: "white" }}
+            >
               Trainings
             </Button>
-            <Button color="inherit" component={Link} to="/calendar">
+            <Button
+              component={Link}
+              to="/calendar"
+              variant="outlined"
+              style={{ color: "white", borderColor: "white" }}
+            >
               Calendar
             </Button>
           </Box>
@@ -28,3 +49,4 @@ function App() {
 }
 
 export default App;
+

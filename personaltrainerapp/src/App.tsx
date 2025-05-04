@@ -1,8 +1,8 @@
 import { Link, Outlet } from "react-router-dom";
 import { AppBar, Toolbar, Button, Box } from "@mui/material";
-import './App.css';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-function App() {
+export default function App() {
   return (
     <>
       <AppBar position="static" style={{ backgroundColor: "#333" }}>
@@ -12,8 +12,8 @@ function App() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              gap: "16px", // Space between buttons
-              width: "100%", // Center the buttons horizontally
+              gap: "16px", 
+              width: "100%", 
             }}
           >
             <Button
@@ -48,5 +48,5 @@ function App() {
   );
 }
 
-export default App;
+// This is the main entry point of the application. It sets up the routing and renders the App component.
 

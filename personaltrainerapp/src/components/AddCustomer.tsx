@@ -13,8 +13,11 @@ type AddCustomerProps = {
   fetchCustomers: () => void;
 };
 
+// This component is used to add a new customer to the customer list
 export default function AddCustomer({ fetchCustomers }: AddCustomerProps) {
   const [newCustomer, setNewCustomer] = useState<Customer>({} as Customer);
+
+  // State to manage the dialog's open/close state
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -25,6 +28,7 @@ export default function AddCustomer({ fetchCustomers }: AddCustomerProps) {
     setOpen(false);
   };
 
+  // Function to save the new customer
   const handleSave = () => {
     fetch("https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers", {
       method: "POST",
@@ -48,9 +52,10 @@ export default function AddCustomer({ fetchCustomers }: AddCustomerProps) {
 
   return (
     <>
-      <Button size="small" onClick={handleClickOpen}>
+      <Button size="small" variant="contained" color="primary" onClick={handleClickOpen}>
         Add Customer
       </Button>
+      {/* Dialog for adding a new customer */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add new Customer</DialogTitle>
         <DialogContent>

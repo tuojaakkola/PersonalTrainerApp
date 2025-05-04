@@ -11,6 +11,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 export default function Trainings() {
   const [trainings, setTrainings] = useState<Training[]>([]);
 
+  // Define the column definitions for the AgGridReact component
   const [columnDefs] = useState<ColDef<Training>[]>([
     { field: "activity", filter: true, width: 300, headerName: "Activity" },
     { field: "date", filter: true, width: 300, headerName: "Date" },
@@ -36,6 +37,7 @@ export default function Trainings() {
     },
   ]);
 
+  // Function to fetch trainings and their associated customer data
   const fetchTrainings = async () => {
     try {
       const response = await fetch(
@@ -44,6 +46,7 @@ export default function Trainings() {
       const data = await response.json();
       const trainingsRaw = data._embedded.trainings;
 
+      // Format trainings and fetch customers name from the data for each training
       const formattedTrainings = await Promise.all(
         trainingsRaw.map(async (training: Training) => {
           const customerResponse = await fetch(training._links.customer.href);
@@ -54,7 +57,7 @@ export default function Trainings() {
           return {
             id: trainingId,
             activity: training.activity,
-            date: dayjs(training.date).format("DD/MM/YYYY HH:mm"),
+            date: dayjs(training.date).format("DD/MM/YYYY HH:mm"), // Formatting date using dayjs
             duration: training.duration,
             customername: customername,
           };
@@ -71,6 +74,7 @@ export default function Trainings() {
     fetchTrainings();
   }, []);
 
+  // Function to delete a training
   const handleDeleteTraining = async (training: Training) => {
     if (
       window.confirm(
@@ -96,6 +100,7 @@ export default function Trainings() {
       <div style={{ marginBottom: "20px", marginTop: "20px" }}>
         <AddTraining fetchTrainings={fetchTrainings} />
       </div>
+      
       <AgGridReact
         rowData={trainings}
         columnDefs={columnDefs}

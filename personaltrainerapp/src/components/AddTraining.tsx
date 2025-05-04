@@ -15,6 +15,7 @@ type AddTrainingProps = {
   fetchTrainings: () => void;
 };
 
+// This component is used to add a new training to the training list
 export default function AddTraining({ fetchTrainings }: AddTrainingProps) {
   const [open, setOpen] = useState(false);
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -25,6 +26,8 @@ export default function AddTraining({ fetchTrainings }: AddTrainingProps) {
     customer: "",
   });
 
+  // Function to open the dialog and fetch customer data  
+  // when the dialog is opened
   const handleClickOpen = () => {
     setOpen(true);
     fetchCustomers();
@@ -90,6 +93,7 @@ export default function AddTraining({ fetchTrainings }: AddTrainingProps) {
       <Button variant="contained" onClick={handleClickOpen}>
         Add Training
       </Button>
+      {/* Dialog for adding a new training */}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Add New Training</DialogTitle>
         <DialogContent>

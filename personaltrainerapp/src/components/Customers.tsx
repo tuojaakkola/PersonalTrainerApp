@@ -10,12 +10,14 @@ import { Customer } from "../types";
 import { Button } from "@mui/material";
 import EditCustomer from "./EditCustomer";
 import AddCustomer from "./AddCustomer";
+import ExportCSV from "./ExportCSV";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 export default function Customers() {
   const [customers, setCustomers] = useState<Customer[]>([]);
 
+  // Define the column definitions for the AgGridReact component
   const [columnDefs] = useState<ColDef<Customer>[]>([
     { field: "firstname", filter: true, headerName: "First Name" },
     { field: "lastname", filter: true, headerName: "Last Name" },
@@ -99,14 +101,13 @@ export default function Customers() {
           }
           return response.json();
         })
-        .then(() => fetchCustomers()) 
+        .then(() => fetchCustomers())
         .catch((error) => {
           console.error("Error resetting the database:", error);
         });
     }
   };
 
-  // Render the component and fetch customer data on mount
   useEffect(() => {
     fetchCustomers();
   }, []);
@@ -121,6 +122,8 @@ export default function Customers() {
           justifyContent: "space-between",
         }}
       >
+        <ExportCSV customers={customers} />
+        <AddCustomer fetchCustomers={fetchCustomers} />
         <Button
           size="small"
           variant="contained"
@@ -129,7 +132,6 @@ export default function Customers() {
         >
           Reset Database
         </Button>
-        <AddCustomer fetchCustomers={fetchCustomers} />
       </div>
       <AgGridReact
         rowData={customers}
@@ -138,8 +140,8 @@ export default function Customers() {
         paginationAutoPageSize={true}
         defaultColDef={{
           resizable: true,
-          flex: 1, 
-          minWidth: 100, 
+          flex: 1,
+          minWidth: 100,
         }}
       />
     </div>

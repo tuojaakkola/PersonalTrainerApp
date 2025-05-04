@@ -1,3 +1,4 @@
+// This type is used to represent the customer data from the API
 export type Customer = {
     firstname: string;
     lastname: string;
@@ -19,7 +20,8 @@ export type Customer = {
     };
   };
 
-  export type Training = {
+// This type is used to represent the training data from the API
+export type Training = {
     id: number;
     activity: string;
     date: Date;
@@ -37,3 +39,17 @@ export type Customer = {
       };
     };
   };
+
+// This type is used to represent the events in the calendar
+export type CalendarEvent = {
+    id: string;
+    activity: string;
+    date: string; 
+    duration: number;
+    customername: string;
+    start: Date;
+    end: Date;
+    title: string;
+  };
+
+  

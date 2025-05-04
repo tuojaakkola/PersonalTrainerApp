@@ -1,4 +1,11 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
 import { Customer } from "../types";
 import { useState } from "react";
 
@@ -7,124 +14,163 @@ type EditCustomerProps = {
   fetchCustomers: () => void;
 };
 
-export default function EditCustomer({ data: customer, fetchCustomers }: EditCustomerProps) {
-    const [editedCustomer, setEditedCustomer] = useState<Customer>({} as Customer);
-    const [open, setOpen] = useState(false);
+// This component is used to edit a customer in the customer list
+export default function EditCustomer({data: customer, fetchCustomers,}: EditCustomerProps) {
+  const [editedCustomer, setEditedCustomer] = useState<Customer>( {} as Customer);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-        setEditedCustomer({
-            firstname: customer.firstname,
-            lastname: customer.lastname,
-            streetaddress: customer.streetaddress,
-            postcode: customer.postcode,
-            city: customer.city,
-            email: customer.email,
-            phone: customer.phone,
-            _links: customer._links
-        });
-      };
+  //State to manage the dialog's open/close state
+  const [open, setOpen] = useState(false);
 
-    const handleClose = () => {
-        setOpen(false);
-    };
-    
-    const handleUpdate = async () => {
-        fetch(customer._links.self.href, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(editedCustomer)
-        })
-            .then((Response) => {
-                if (!Response.ok) throw new Error("Error updating the Customer");
-                return Response.json();
-            })
-            .then(() => fetchCustomers())
-            .then(() => handleClose())
-            .catch((error) => {
-                console.error("Error updating the Customer", error);
-              });
-    };
+  // Function to open the dialog and populate the editedCustomer state
+  const handleClickOpen = () => {
+    setOpen(true);
+    setEditedCustomer({
+      firstname: customer.firstname,
+      lastname: customer.lastname,
+      streetaddress: customer.streetaddress,
+      postcode: customer.postcode,
+      city: customer.city,
+      email: customer.email,
+      phone: customer.phone,
+      _links: customer._links,
+    });
+  };
 
-    return (
-        <>
-          <Button size="small" onClick={handleClickOpen}>
-            Edit
-          </Button>
-          <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Edit Customer</DialogTitle>
-            <DialogContent>
-                <TextField
-                required
-                name="firstname"
-                value={editedCustomer.firstname}
-                onChange={(event) => setEditedCustomer({ ...editedCustomer, firstname: event.target.value })}
-                label="First Name"
-                fullWidth
-                variant="standard"
-                />
-                <TextField
-                    required
-                    name="lastname"
-                    value={editedCustomer.lastname}
-                    onChange={(event) => setEditedCustomer({ ...editedCustomer, lastname: event.target.value })}
-                    label="Last Name"
-                    fullWidth
-                    variant="standard"
-                />
-                <TextField
-                    required
-                    name="streetaddress"
-                    value={editedCustomer.streetaddress}
-                    onChange={(event) => setEditedCustomer({ ...editedCustomer, streetaddress: event.target.value })}
-                    label="Street Address"
-                    fullWidth
-                    variant="standard"
-                />
-                <TextField
-                    required
-                    name="postcode"
-                    value={editedCustomer.postcode}
-                    onChange={(event) => setEditedCustomer({ ...editedCustomer, postcode: event.target.value })}
-                    label="Postcode"
-                    fullWidth
-                    variant="standard"
-                />
-                <TextField
-                    required
-                    name="city"
-                    value={editedCustomer.city}
-                    onChange={(event) => setEditedCustomer({ ...editedCustomer, city: event.target.value })}
-                    label="City"
-                    fullWidth
-                    variant="standard"
-                />
-                <TextField
-                    required
-                    name="email"
-                    value={editedCustomer.email}
-                    onChange={(event) => setEditedCustomer({ ...editedCustomer, email: event.target.value })}
-                    label="Email"
-                    fullWidth
-                    variant="standard"
-                />
-                <TextField
-                    required
-                    name="phone"
-                    value={editedCustomer.phone}
-                    onChange={(event) => setEditedCustomer({ ...editedCustomer, phone: event.target.value })}
-                    label="Phone"
-                    fullWidth
-                    variant="standard"
-                />
-            </DialogContent>
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // Function to handle the update of the customer
+  const handleUpdate = async () => {
+    fetch(customer._links.self.href, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedCustomer),
+    })
+      .then((Response) => {
+        if (!Response.ok) throw new Error("Error updating the Customer");
+        return Response.json();
+      })
+      .then(() => fetchCustomers())
+      .then(() => handleClose())
+      .catch((error) => {
+        console.error("Error updating the Customer", error);
+      });
+  };
+
+  return (
+    <>
+      <Button size="small" onClick={handleClickOpen}>
+        Edit
+      </Button>
+
+      {/* Dialog for editing customer details */}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Edit Customer</DialogTitle>
+        <DialogContent>
+          <TextField
+            required
+            name="firstname"
+            value={editedCustomer.firstname}
+            onChange={(event) =>
+              setEditedCustomer({
+                ...editedCustomer,
+                firstname: event.target.value,
+              })
+            }
+            label="First Name"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            required
+            name="lastname"
+            value={editedCustomer.lastname}
+            onChange={(event) =>
+              setEditedCustomer({
+                ...editedCustomer,
+                lastname: event.target.value,
+              })
+            }
+            label="Last Name"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            required
+            name="streetaddress"
+            value={editedCustomer.streetaddress}
+            onChange={(event) =>
+              setEditedCustomer({
+                ...editedCustomer,
+                streetaddress: event.target.value,
+              })
+            }
+            label="Street Address"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            required
+            name="postcode"
+            value={editedCustomer.postcode}
+            onChange={(event) =>
+              setEditedCustomer({
+                ...editedCustomer,
+                postcode: event.target.value,
+              })
+            }
+            label="Postcode"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            required
+            name="city"
+            value={editedCustomer.city}
+            onChange={(event) =>
+              setEditedCustomer({ ...editedCustomer, city: event.target.value })
+            }
+            label="City"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            required
+            name="email"
+            value={editedCustomer.email}
+            onChange={(event) =>
+              setEditedCustomer({
+                ...editedCustomer,
+                email: event.target.value,
+              })
+            }
+            label="Email"
+            fullWidth
+            variant="standard"
+          />
+          <TextField
+            required
+            name="phone"
+            value={editedCustomer.phone}
+            onChange={(event) =>
+              setEditedCustomer({
+                ...editedCustomer,
+                phone: event.target.value,
+              })
+            }
+            label="Phone"
+            fullWidth
+            variant="standard"
+          />
+        </DialogContent>
         <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleUpdate}>Save</Button>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleUpdate}>Save</Button>
         </DialogActions>
-        </Dialog>
-        </>
-    );
+      </Dialog>
+    </>
+  );
 }
